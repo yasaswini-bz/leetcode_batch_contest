@@ -32,8 +32,9 @@ def get_all_particpate(contestname,contest_number,batchusers):
       response = make_request(url)
       if response.status_code == 200:
         user_pat = response.json()["total_rank"]
-        print("scr",i['username'])
+        
         for i in user_pat:
+          print("scr",i['username'])
           users.append({'username' : i['username'],'rank' : i['rank'],'score':i['score']})
         
     dataframe = pd.DataFrame(users)
