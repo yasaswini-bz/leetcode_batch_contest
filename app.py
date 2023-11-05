@@ -1,4 +1,3 @@
-
 from flask import Flask, request, render_template,jsonify
 import requests
 from bs4 import BeautifulSoup
@@ -24,19 +23,28 @@ def get_all_particpate(contestname,contest_number,batchusers):
   users = []
   url =  "https://leetcode.com/contest/api/ranking/" + contestname + "-"+contest_number + "/?pagination=" + str(p) + "&region=india"
   response = make_request(url)
-  if response.status_code == 200:
+  if response != None and response.status_code == 200:
     total_no_of_pages = int(response.json()['user_num'])//25 + 1
 
     for p in range(1,total_no_of_pages+1):
       url =  "https://leetcode.com/contest/api/ranking/" + contestname + "-"+contest_number + "/?pagination=" + str(p) + "&region=india"
       response = make_request(url)
-      if response.status_code == 200:
+      if response != None and response.status_code == 200:
         user_pat = response.json()["total_rank"]
         
         for i in user_pat:
           print("scr",i['username'])
           users.append({'username' : i['username'],'rank' : i['rank'],'score':i['score']})
-        
+      else:
+        data = {
+          'Name': [""],
+          'rollNum': [""],
+          'username': [""],
+          'rank': [""],
+          'score': [""]}
+        df = pd.DataFrame(data)
+        list_of_dicts = df.to_dict(orient='records')
+        return render_template('home.html', output=list_of_dicts)
     dataframe = pd.DataFrame(users)
     all_handles = batchusers
     print(all_handles)
@@ -48,6 +56,17 @@ def get_all_particpate(contestname,contest_number,batchusers):
     m['score'].fillna('-', inplace=True)
     print(m)
     return m
+  else:
+    data = {
+      'Name': [""],
+      'rollNum': [""],
+      'username': [""],
+      'rank': [""],
+      'score': [""]}
+    df = pd.DataFrame(data)
+    list_of_dicts = df.to_dict(orient='records')
+    return render_template('home.html', output=list_of_dicts)   
+  
 app = Flask(__name__)
 @app.route('/get_participate', methods=['POST'])
 def get_participate():
