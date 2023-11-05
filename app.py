@@ -34,6 +34,7 @@ def get_all_particpate(contestname,contest_number,batchusers):
         user_pat = response.json()["total_rank"]
         
         for i in user_pat:
+	  print("scraping",i['username'])
           users.append({'username' : i['username'],'rank' : i['rank'],'score':i['score']})
         
     dataframe = pd.DataFrame(users)
