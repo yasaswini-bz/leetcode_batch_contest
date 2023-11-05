@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import json
 import pandas as pd
 import time
-MAX_RETRIES = 3
+MAX_RETRIES = 5
 def make_request(url):
     time.sleep(1)
     for _ in range(MAX_RETRIES):
@@ -15,7 +15,7 @@ def make_request(url):
             return response
         except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
-            time.sleep(10)  # Wait before retrying
+            time.sleep(20)  # Wait before retrying
 
     print(f"Failed to make request after {MAX_RETRIES} retries")
     return None
