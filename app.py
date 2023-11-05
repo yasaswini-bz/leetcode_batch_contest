@@ -84,4 +84,4 @@ def hello_world():
   list_of_dicts = df.to_dict(orient='records')
   return render_template('home.html', output=list_of_dicts)
 if __name__ == '__main__':
-	app.run()
+	app.run(host = '0.0.0.0')
