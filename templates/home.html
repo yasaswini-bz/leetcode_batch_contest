@@ -11,8 +11,8 @@
             if (downloadBtn) {
                 downloadBtn.addEventListener('click', function() {
                     const data = myVariable;
-                    console.log(data); // Assuming myVariable contains the data to be downloaded
-                    var myFile = "contest_participation.xlsx";
+                    console.log(data); 
+                    var myFile = "leetcode_contest_report.xlsx";
                     var myWorkSheet = XLSX.utils.json_to_sheet(data);
                     var myWorkBook = XLSX.utils.book_new();
                     XLSX.utils.book_append_sheet(myWorkBook, myWorkSheet, "myWorkSheet");
