@@ -34,7 +34,7 @@ def get_all_particpate(contestname,contest_number,batchusers):
         user_pat = response.json()["total_rank"]
         
         for i in user_pat:
-          print("scr",i['username'])
+          
           users.append({'username' : i['username'],'rank' : i['rank'],'score':i['score']})
       else:
         data = {
@@ -48,14 +48,14 @@ def get_all_particpate(contestname,contest_number,batchusers):
         return render_template('home.html', output=list_of_dicts)
     dataframe = pd.DataFrame(users)
     all_handles = batchusers
-    print(all_handles)
+    
     all_handles.rename(columns = {'Roll No':'rollNum'}, inplace = True)
     all_handles.rename(columns = {'LEETCODE':'username'}, inplace = True)
     leetcode_handles = all_handles[['Name','rollNum',"username"]]
     m = pd.merge(leetcode_handles,dataframe,on = 'username', how = "left")
     m['rank'].fillna('-', inplace=True)
     m['score'].fillna('-', inplace=True)
-    print(m)
+    
     return m
   else:
     data = {
@@ -76,11 +76,11 @@ def get_participate():
         batchusers = pd.read_csv(user)
         contestname = request.form['contestname']
         contest_number = request.form['contestnumber']
-        print(contestname,contest_number)
+        
         result = get_all_particpate(contestname,contest_number,batchusers)
         if not result.empty:
           result = result.to_dict(orient='records')
-          print(result)
+          
           return render_template('home.html', output= result)
         else:
           data = {
