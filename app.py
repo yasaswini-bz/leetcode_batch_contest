@@ -97,4 +97,4 @@ def hello_world():
     return render_template('home.html', output=df.to_dict(orient='records'))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run()
