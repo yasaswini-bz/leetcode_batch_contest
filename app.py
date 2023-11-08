@@ -42,6 +42,7 @@ def get_all_participants(contestname, contest_number, batchusers):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = []
         for page_num in range(1, total_no_of_pages + 1):
+            time.sleep(5)
             url = url_template.format(contestname, contest_number, page_num)
             futures.append(executor.submit(get_participants_page, url))
 
